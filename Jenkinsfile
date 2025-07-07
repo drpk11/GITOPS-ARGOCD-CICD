@@ -48,6 +48,7 @@ pipeline {
                 '''
             }
         }
+    }
 
     post{
             success {
@@ -57,5 +58,5 @@ pipeline {
                 echo 'Build & deploy un-successfull'
             }
         }
-    }
+    
 }
