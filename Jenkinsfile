@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-     post{
+    post{
             success {
                 echo 'Build & deploy successfull'
             }
