@@ -45,16 +45,22 @@ pipeline {
         }
         stage('install ARGO CD CLI'){
             steps{
-                sh '''
-                    echo 'installing ARGO CD'
-                '''
+                script{
+			kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+	}
             }
         }
         stage('Applying K8s manifests file n sync with argo cd'){
             steps{
-                sh '''
-                    echo 'Sync with ARGO CD'
-                '''
+                script{
+			kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://127.0.0.1:64118') {
+    				sh '''
+		argocd login 127.0.0.1:56137 --username admin --password $(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure
+
+			}
+		}
+		    
             }
         }
     }
