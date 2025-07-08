@@ -1,11 +1,11 @@
 pipeline {
     agent any
-    tools{
-	nodejs 'NodeJS'
-    } 
-    environment{
-	DOCKER_HUB_REPO = 'zikalina/node-argocd-image'
-	}
+    #tools{
+	#nodejs 'NodeJS'
+    #} 
+    #environment{
+	#DOCKER_HUB_REPO = 'zikalina/node-argocd-image'
+	#}
     stages {
         stage('Checkout Github') { 
             steps {
@@ -14,14 +14,14 @@ pipeline {
         }
         stage('Install node dependencies') { 
             steps {
-                sh 'npm install'
+                #sh 'npm install'
             }
         }
         stage('Build') { 
             steps {
                 script{
                     echo 'build docker image'
-		    docker.build("${DOCKER_HUB_REPO}:latest")
+		   # docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
