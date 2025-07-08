@@ -3,6 +3,10 @@ pipeline {
    tools{
 	 nodejs 'NodeJS'
 	}
+   environment{
+		DOCKER_HUB_REPO : 'zikalina/node-argocd-image'
+
+   }
     stages {
         stage('Checkout Github') { 
             steps {
@@ -17,7 +21,8 @@ pipeline {
         stage('Build') { 
             steps {
                 script{
-                    echo 'build docker image'
+                    echo ' building image'
+		    docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
