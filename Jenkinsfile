@@ -37,7 +37,7 @@ pipeline {
             steps{
                 script{
 			echo 'push image'
-			docker.withRegistry('http://registry.hub.docker.com',"${DOCKER_HUB_CRED})"{
+			docker.withRegistry('http://registry.hub.docker.com',"${DOCKER_HUB_CRED}"){
 			     dockerImage.push('latest')
                         }
 		}
