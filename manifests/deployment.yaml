@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-argocd
-        image: node-argocd-image:latest
+        image: zikalina/node-argocd-image:latest
         ports:
         - containerPort: 80
