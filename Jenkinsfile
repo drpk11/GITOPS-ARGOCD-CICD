@@ -5,7 +5,7 @@ pipeline {
 	}
    environment{
 		DOCKER_HUB_REPO = 'zikalina/node-argocd-image'
-
+		DOCKER_HUB_CRED =  'gitops-dockerhub'
    }
     stages {
         stage('Checkout Github') { 
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script{
                     echo ' building image'
-		    docker.build("${DOCKER_HUB_REPO}:latest")
+		    dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
@@ -35,9 +35,12 @@ pipeline {
         }
         stage('Push image'){
             steps{
-                sh '''
-                    echo 'push the image to docker hub'
-                '''
+                script{
+			echo 'push image'
+			docker.withRegistry('http://registry.hub.docker.com',"${DOCKER_HUB_CRED})"{
+			     dockerImage.push('latest')
+                        }
+		}
             }
         }
         stage('install ARGO CD CLI'){
