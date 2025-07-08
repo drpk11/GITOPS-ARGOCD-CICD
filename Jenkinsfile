@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Checkout Github') { 
             steps {
-                script{
-                    echo 'build docker image'
-                }
+                git branch: 'main', credentialsId: 'Gitops-Argo', url: 'https://github.com/drpk11/GITOPS-ARGOCD-CICD.git'
         }
         stage('Install node dependencies') { 
             steps {
