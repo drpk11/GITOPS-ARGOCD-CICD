@@ -3,6 +3,9 @@ pipeline {
     tools{
 	nodejs 'NodeJS'
     } 
+    environment{
+	DOCKER_HUB_REPO = 'zikalina/gitops'
+	}
     stages {
         stage('Checkout Github') { 
             steps {
@@ -18,6 +21,7 @@ pipeline {
             steps {
                 script{
                     echo 'build docker image'
+		    docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
