@@ -3,7 +3,8 @@ pipeline {
    
     stages {
         stage('Checkout Github') { 
-            steps script{
+            steps {
+                script{
                     echo 'build docker image'
                 }
         }
