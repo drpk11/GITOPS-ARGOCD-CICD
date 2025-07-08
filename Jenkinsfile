@@ -4,8 +4,10 @@ pipeline {
     stages {
         stage('Checkout Github') { 
             steps {
-                git branch: 'main', credentialsId: 'Gitops-Argo', url: 'https://github.com/drpk11/GITOPS-ARGOCD-CICD.git'
-        }
+                 sh '''
+                     echo 'Git'
+                  '''
+                }
         stage('Install node dependencies') { 
             steps {
                 sh 'npm install'
