@@ -46,9 +46,24 @@ pipeline {
         stage('install ARGO CD CLI'){
             steps{
                 script{
-			sh 'kubectl create namespace argocd || true '
-sh 'kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml'
-	}
+			sh '''
+    echo "Installing kubectl & ArgoCD CLI..."
+
+    # Download and install kubectl
+    curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    sudo mv kubectl /usr/local/bin/kubectl
+
+    # Download and install Argo CD CLI
+    curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    chmod +x argocd
+    sudo mv argocd /usr/local/bin/argocd
+
+    # Verify installations
+    kubectl version --client
+    argocd version
+'''
+
             }
         }
         stage('Applying K8s manifests file n sync with argo cd'){
