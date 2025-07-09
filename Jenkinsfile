@@ -63,7 +63,7 @@ pipeline {
     kubectl version --client
     argocd version
 '''
-
+		}
             }
         }
         stage('Applying K8s manifests file n sync with argo cd'){
