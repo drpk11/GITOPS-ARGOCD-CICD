@@ -80,7 +80,7 @@ $HOME/bin/argocd version
                 script{
 			kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://127.0.0.1:64118') {
     				sh '''
-		argocd login 127.0.0.1:56137 --username admin --password $(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+		argocd login 127.0.0.1:56137 --username admin --password $(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure
                  '''
 
 			}
