@@ -47,22 +47,31 @@ pipeline {
             steps{
                 script{
 			sh '''
-    echo "Installing kubectl & ArgoCD CLI..."
+echo "Installing kubectl and Argo CD CLI (without sudo)..."
 
-    # Download and install kubectl
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    chmod +x kubectl
-    sudo mv kubectl /usr/local/bin/kubectl
+# Create a bin folder in the workspace
+mkdir -p $HOME/bin
+export PATH=$HOME/bin:$PATH
 
-    # Download and install Argo CD CLI
-    curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-    chmod +x argocd
-    sudo mv argocd /usr/local/bin/argocd
+# Download kubectl
+KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+curl -LO https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+chmod +x kubectl
+mv kubectl $HOME/bin/kubectl
 
-    # Verify installations
-    kubectl version --client
-    argocd version
+# Download Argo CD CLI
+curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+chmod +x argocd
+mv argocd $HOME/bin/argocd
+
+# Add to PATH for the current shell session
+export PATH=$HOME/bin:$PATH
+
+# Verify tools
+$HOME/bin/kubectl version --client
+$HOME/bin/argocd version
 '''
+
 		}
             }
         }
