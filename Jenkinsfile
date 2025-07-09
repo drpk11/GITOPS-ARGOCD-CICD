@@ -4,7 +4,7 @@ pipeline {
 	 nodejs 'NodeJS'
 	}
    environment{
-		DOCKER_HUB_REPO = 'zikalina/node-argocd-image'
+		DOCKER_HUB_REPO = 'user/node-argocd-image'
 		DOCKER_HUB_CRED =  'gitops-dockerhub'
    }
     stages {
