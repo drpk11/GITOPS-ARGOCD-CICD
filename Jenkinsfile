@@ -46,8 +46,8 @@ pipeline {
         stage('install ARGO CD CLI'){
             steps{
                 script{
-			kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+			sh 'kubectl create namespace argocd || true '
+sh 'kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml'
 	}
             }
         }
